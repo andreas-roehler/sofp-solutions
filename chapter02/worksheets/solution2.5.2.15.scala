@@ -35,6 +35,7 @@ def maxsub(xs: Seq[Double], res: Seq[Double] = Seq.empty, max: Double = Double.N
   }
 }
 
+val a =  List(1.0, -1.5, 2.0, 3.0, -0.5, 2.0, 1.0, -10.0, 2.0)
 val result =  maxsub(a)
 val resultSum = maxsub(a).sum
 val expected =  List(2.0, 3.0, -0.5, 2.0, 1.0)
