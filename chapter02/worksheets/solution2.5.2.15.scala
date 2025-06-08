@@ -20,23 +20,16 @@
 def maxsub(xs: Seq[Double], res: Seq[Double] = Seq.empty, max: Double = Double.NegativeInfinity): Seq[Double] = { 
   if (xs.isEmpty) res.reverse
   else {
-    var resIntern: Seq[Double] = Seq.empty
     var newRes: Seq[Double] = Seq.empty
-    var maxIntern = max
-    var newIntern: Seq[Double] = Seq.empty 
-    for (i <- xs) {
-      newIntern = i +: resIntern
-      resIntern = newIntern
-      if (maxIntern < newIntern.sum) {newRes = newIntern
-                                      maxIntern = newRes.sum}
-    }
-    if (maxIntern <= max) maxsub(xs.tail, res, max)
-    else maxsub(xs.tail, newRes, maxIntern)
+    xs.foldLeft(newRes){ (x, y) => { if (newRes.sum < (y +: x).sum) { (newRes = y +: x); y +: x}
+                                     else y +: x} }
+    if (newRes.sum <= max) maxsub(xs.tail, res, max)
+    else maxsub(xs.tail, newRes, newRes.sum)
   }
 }
 
 val a =  List(1.0, -1.5, 2.0, 3.0, -0.5, 2.0, 1.0, -10.0, 2.0)
-val result =  maxsub(a)
+val result = maxsub(a)
 val resultSum = maxsub(a).sum
 val expected =  List(2.0, 3.0, -0.5, 2.0, 1.0)
 val expectedSum =  List(2.0, 3.0, -0.5, 2.0, 1.0).sum
